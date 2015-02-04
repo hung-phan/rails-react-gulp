@@ -9,8 +9,12 @@ var del        = require('del');
 var gulp       = require('gulp');
 var gutil      = require('gulp-util');
 var plumber    = require('gulp-plumber');
+
+var sourcemaps = require('gulp-sourcemaps');
 var es6ify     = require('es6ify');
 var browserify = require('browserify');
+var source     = require('vinyl-source-stream');
+var buffer     = require('vinyl-buffer');
 
 gulp.task('development:clean', function () {
   del([config.development.build], function (err, paths) {
