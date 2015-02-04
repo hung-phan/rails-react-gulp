@@ -4,26 +4,26 @@
  * Development config
  */
 
-var config       = require('./config.json');
-var del          = require('del');
-var gulp         = require('gulp');
-var gutil        = require('gulp-util');
-var plumber      = require('gulp-plumber');
+var config     = require('./config.json');
+var del        = require('del');
+var gulp       = require('gulp');
+var gutil      = require('gulp-util');
+var plumber    = require('gulp-plumber');
 
-var sourcemaps   = require('gulp-sourcemaps');
-var es6ify       = require('es6ify');
-var debowerify   = require('debowerify');
-var browserify   = require('browserify');
-var source       = require('vinyl-source-stream');
-var buffer       = require('vinyl-buffer');
-var watchify     = require('watchify');
-var literalify   = require('literalify').configure(config.browserify.transform.literalify);
-var Notification = require('node-notifier');
+var sourcemaps = require('gulp-sourcemaps');
+var to5ify     = require('6to5ify');
+var debowerify = require('debowerify');
+var browserify = require('browserify');
+var source     = require('vinyl-source-stream');
+var buffer     = require('vinyl-buffer');
+var watchify   = require('watchify');
+var literalify = require('literalify').configure(config.browserify.transform.literalify);
+var notifier   = require('node-notifier');
 
 var errorHandlers = {
   browserifyErrorHandler: function (err) {
-     (new Notification()).notify({ message: 'Error: ' + err.message });
-     gutil.log(util.colors.red('Error'), err.message);
+    notifier.notify({ message: 'Error: ' + err.message });
+    gutil.log(gutil.colors.red('Error'), err.message);
   }
 };
 
@@ -41,8 +41,9 @@ gulp.task('development:build', function() {
   var bundler = browserify(config.browserify.settings);
 
   bundler.add('./app/assets/javascripts/src/test-src.js');
+
+  bundler.transform(to5ify);
   bundler.transform(literalify);
-  bundler.transform(debowerify);
 
   var stream = bundler.bundle()
                  .on('error', errorHandlers.browserifyErrorHandler)

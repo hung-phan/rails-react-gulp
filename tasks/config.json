@@ -8,8 +8,6 @@
     "src": "./app/assets/javascripts/src/*-src.js",
     "build": "./app/assets/javascripts/build/"
   },
-  "bower": {
-  },
   "browserify": {
     "settings": {
       "basedir": ".",
