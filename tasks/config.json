@@ -1,3 +1,7 @@
 {
-  "name": "Test"
+  "app_name": "Rails with Gulp",
+  "development": {
+    "src": "./app/assets/javascripts/src-*.js",
+    "dest": "build.js"
+  }
 }
