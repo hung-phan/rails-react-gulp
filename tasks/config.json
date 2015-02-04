@@ -3,5 +3,26 @@
   "development": {
     "src": "./app/assets/javascripts/src/*-src.js",
     "build": "./app/assets/javascripts/build/"
+  },
+  "production": {
+    "src": "./app/assets/javascripts/src/*-src.js",
+    "build": "./app/assets/javascripts/build/"
+  },
+  "bower": {
+  },
+  "browserify": {
+    "settings": {
+      "basedir": ".",
+      "cache": {},
+      "packageCache": {},
+      "fullPaths": true
+    },
+    "transform": {
+      "literalify": {
+        "jquery": "window.$",
+        "underscore": "window._",
+        "react": "window.React"
+      }
+    }
   }
 }

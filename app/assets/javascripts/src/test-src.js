@@ -1,1 +1,1 @@
-Hello
+var $ = require('jquery');
