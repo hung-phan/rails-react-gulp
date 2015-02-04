@@ -9,8 +9,7 @@ var del    = require('del');
 
 gulp.task('development:clean', function () {
   // remove bundle.js file
-  console.log(config.development.src);
-  del(['./app/assets/javascripts/build.js'], function (err, paths) {
+  del([config.development.dest], function (err, paths) {
     console.log('Deleted files/folders:\n', paths.join('\n'));
   });
 });
