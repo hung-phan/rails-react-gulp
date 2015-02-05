@@ -14,6 +14,7 @@
     "minimist": "^1.1.0",
     "node-notifier": "^4.1.0",
     "require-dir": "^0.1.0",
+    "through2": "^0.6.3",
     "vinyl-transform": "^1.0.0",
     "watchify": "^2.3.0"
   },
