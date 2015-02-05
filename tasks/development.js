@@ -14,11 +14,15 @@ var sourcemaps = require('gulp-sourcemaps');
 var to5ify     = require('6to5ify');
 var debowerify = require('debowerify');
 var browserify = require('browserify');
+
 var source     = require('vinyl-source-stream');
 var buffer     = require('vinyl-buffer');
+
 var transform  = require('vinyl-transform');
+
 var watchify   = require('watchify');
 var literalify = require('literalify').configure(config.browserify.transform.literalify);
+
 var errorsHandler = require('./errors-handler');
 
 // main task
@@ -32,20 +36,18 @@ gulp.task('development:clean', function () {
 });
 
 gulp.task('development:build', function() {
+  var browserified = transform(function(filename) {
+    var b = browserify(filename, config.browserify.settings);
 
-  var bundler = transform(function(filename) {
-    var b = browserify(filename);
-
-    // transform function
     b.transform(to5ify);
     b.transform(literalify);
 
     return b.bundle();
   });
 
-  var stream = gulp.src(config.development.src)
+  var stream = gulp.src([config.development.src])
                  .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
-                 .pipe(bundler)
+                 .pipe(browserified)
                  .pipe(gulp.dest(config.development.build));
 
   return stream;

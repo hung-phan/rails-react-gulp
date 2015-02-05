@@ -1,16 +1,15 @@
 {
   "app_name": "Rails with Gulp",
   "development": {
-    "src": "./app/assets/javascripts/src/*-src.js",
+    "src": "./app/assets/source/*-build.js",
     "build": "./app/assets/javascripts/build"
   },
   "production": {
-    "src": "./app/assets/javascripts/src/*-src.js",
+    "src": "./app/assets/source/*-build.js",
     "build": "./app/assets/javascripts/build"
   },
   "browserify": {
     "settings": {
-      "basedir": ".",
       "cache": {},
       "packageCache": {},
       "fullPaths": true
