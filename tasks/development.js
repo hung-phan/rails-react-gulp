@@ -15,9 +15,6 @@ var to5ify     = require('6to5ify');
 var debowerify = require('debowerify');
 var browserify = require('browserify');
 
-var source     = require('vinyl-source-stream');
-var buffer     = require('vinyl-buffer');
-
 var transform  = require('vinyl-transform');
 
 var watchify   = require('watchify');
