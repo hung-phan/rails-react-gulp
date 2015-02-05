@@ -16,6 +16,7 @@ var debowerify = require('debowerify');
 var browserify = require('browserify');
 var source     = require('vinyl-source-stream');
 var buffer     = require('vinyl-buffer');
+var transform  = require('vinyl-transform');
 var watchify   = require('watchify');
 var literalify = require('literalify').configure(config.browserify.transform.literalify);
 var notifier   = require('node-notifier');
@@ -38,16 +39,20 @@ gulp.task('development:clean', function () {
 });
 
 gulp.task('development:build', function() {
-  var bundler = browserify(config.browserify.settings);
 
-  bundler.add('./app/assets/javascripts/src/test-src.js');
+  var bundler = transform(function(filename) {
+    var b = browserify(filename);
 
-  bundler.transform(to5ify);
-  bundler.transform(literalify);
+    // transform function
+    b.transform(to5ify);
+    b.transform(literalify);
 
-  var stream = bundler.bundle()
-                 .on('error', errorHandlers.browserifyErrorHandler)
-                 .pipe(source('test-src.js'))
+    return b.bundle();
+  });
+
+  var stream = gulp.src(config.development.src)
+                 .pipe(plumber({ errorHandler: errorHandlers.browserifyErrorHandler }))
+                 .pipe(bundler)
                  .pipe(gulp.dest(config.development.build));
 
   return stream;
