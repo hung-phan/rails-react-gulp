@@ -2,11 +2,11 @@
   "app_name": "Rails with Gulp",
   "development": {
     "src": "./app/assets/javascripts/src/*-src.js",
-    "build": "./app/assets/javascripts/build/"
+    "build": "./app/assets/javascripts/build"
   },
   "production": {
     "src": "./app/assets/javascripts/src/*-src.js",
-    "build": "./app/assets/javascripts/build/"
+    "build": "./app/assets/javascripts/build"
   },
   "browserify": {
     "settings": {

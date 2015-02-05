@@ -19,14 +19,7 @@ var buffer     = require('vinyl-buffer');
 var transform  = require('vinyl-transform');
 var watchify   = require('watchify');
 var literalify = require('literalify').configure(config.browserify.transform.literalify);
-var notifier   = require('node-notifier');
-
-var errorHandlers = {
-  browserifyErrorHandler: function (err) {
-    notifier.notify({ message: 'Error: ' + err.message });
-    gutil.log(gutil.colors.red('Error'), err.message);
-  }
-};
+var errorsHandler = require('./errors-handler');
 
 // main task
 gulp.task('development:clean', function () {
@@ -51,7 +44,7 @@ gulp.task('development:build', function() {
   });
 
   var stream = gulp.src(config.development.src)
-                 .pipe(plumber({ errorHandler: errorHandlers.browserifyErrorHandler }))
+                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
                  .pipe(bundler)
                  .pipe(gulp.dest(config.development.build));
 
