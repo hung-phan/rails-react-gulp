@@ -1,2 +1,4 @@
-var $ = require('jquery');
-var React = require('react');
+let $ = require('jquery');
+let React = require('react');
+
+let a = (x) => x * x;

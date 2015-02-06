@@ -9,11 +9,6 @@
     "build": "./app/assets/javascripts/build"
   },
   "browserify": {
-    "settings": {
-      "cache": {},
-      "packageCache": {},
-      "fullPaths": true
-    },
     "transform": {
       "literalify": {
         "jquery": "window.$",

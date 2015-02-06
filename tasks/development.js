@@ -4,27 +4,21 @@
  * Development config
  */
 
-var config     = require('./config.json');
-var del        = require('del');
-var gulp       = require('gulp');
-var gutil      = require('gulp-util');
-var plumber    = require('gulp-plumber');
+var config        = require('./config.json');
+var del           = require('del');
+var gulp          = require('gulp');
+var gutil         = require('gulp-util');
+var plumber       = require('gulp-plumber');
 
-var sourcemaps = require('gulp-sourcemaps');
-var to5ify     = require('6to5ify');
-var debowerify = require('debowerify');
-var browserify = require('browserify');
+var to5ify        = require('6to5ify');
+var debowerify    = require('debowerify');
+var browserify    = require('browserify');
 
-var _ = require('lodash');
-var transform  = require('vinyl-transform');
-var source = require('vinyl-source-stream')
-var watchify = require('watchify');
-
-var literalify = require('literalify').configure(config.browserify.transform.literalify);
-
+var _             = require('lodash');
+var transform     = require('vinyl-transform');
+var watchify      = require('watchify');
+var literalify    = require('literalify').configure(config.browserify.transform.literalify);
 var errorsHandler = require('./errors-handler');
-
-var through2 = require('through2');
 
 // main task
 gulp.task('development:clean', function () {
@@ -36,13 +30,18 @@ gulp.task('development:clean', function () {
   });
 });
 
-gulp.task('development:build', function() {
+gulp.task('development:watch', function() {
   var browserified = transform(function(filename) {
-    return browserify(filename, {runtime: require.resolve('regenerator/runtime')})
-             .on('error', errorsHandler.browserifyErrorHandler)
-             .transform(to5ify)
-             .transform(literalify)
-             .bundle()
+    var b = browserify(filename, {
+              runtime: require.resolve('regenerator/runtime'),
+              debug: true
+            });
+
+    b.on('error', errorsHandler.browserifyErrorHandler);
+    b.transform(to5ify);
+    b.transform(literalify);
+
+    return b.bundle();
   });
 
   var stream = gulp.src([config.development.src])
@@ -53,6 +52,23 @@ gulp.task('development:build', function() {
   return stream;
 });
 
-gulp.task('development:watch', function() {
-  gulp.watch(config.development.src, ['development:build']);
+gulp.task('development:build', ['development:clean'], function() {
+  var browserified = transform(function(filename) {
+    var b = browserify(filename, {
+              runtime: require.resolve('regenerator/runtime')
+            });
+
+    b.on('error', errorsHandler.browserifyErrorHandler);
+    b.transform(to5ify);
+    b.transform(literalify);
+
+    return b.bundle();
+  });
+
+  var stream = gulp.src([config.development.src])
+                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
+                 .pipe(browserified)
+                 .pipe(gulp.dest(config.development.build));
+
+  return stream;
 });
