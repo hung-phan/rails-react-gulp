@@ -54,7 +54,7 @@ gulp.task('development:build', function() {
            .pipe(gulp.dest(config.development.build));
 });
 
-gulp.task('scripts', function() {
+gulp.task('development:build', function() {
   var browserified = transform(function(filename) {
     return browserify(filename, {runtime: require.resolve('regenerator/runtime')})
              .on('error', errorsHandler.browserifyErrorHandler)
