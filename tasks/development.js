@@ -15,9 +15,11 @@ var to5ify     = require('6to5ify');
 var debowerify = require('debowerify');
 var browserify = require('browserify');
 
+var _ = require('lodash');
 var transform  = require('vinyl-transform');
+var source = require('vinyl-source-stream')
+var watchify = require('watchify');
 
-var watchify   = require('watchify');
 var literalify = require('literalify').configure(config.browserify.transform.literalify);
 
 var errorsHandler = require('./errors-handler');
@@ -36,7 +38,8 @@ gulp.task('development:clean', function () {
 
 gulp.task('development:build', function() {
   var browserified = through2.obj(function(file, enc, next) {
-    browserify(file.path, config.browserify.settings)
+    browserify(file.path, {runtime: require.resolve('regenerator/runtime')})
+      .on('error', errorsHandler.browserifyErrorHandler)
       .transform(to5ify)
       .transform(literalify)
       .bundle(function(err, res){
@@ -49,4 +52,25 @@ gulp.task('development:build', function() {
            .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
            .pipe(browserified)
            .pipe(gulp.dest(config.development.build));
+});
+
+gulp.task('scripts', function() {
+  var browserified = transform(function(filename) {
+    return browserify(filename, {runtime: require.resolve('regenerator/runtime')})
+             .on('error', errorsHandler.browserifyErrorHandler)
+             .transform(to5ify)
+             .transform(literalify)
+             .bundle()
+  });
+
+  var stream = gulp.src([config.development.src])
+                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
+                 .pipe(browserified)
+                 .pipe(gulp.dest(config.development.build));
+
+  return stream;
+});
+
+gulp.task('development:watch', function() {
+  gulp.watch(config.development.src, ['development:build']);
 });

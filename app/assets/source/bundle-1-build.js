@@ -1,3 +1,13 @@
+require('6to5/polyfill');
+
+function* greeter() {
+  yield "Hello";
+}
+
+var hello = greeter();
+hello.next();
+hello.next();
+
 let Home  = React.createClass({
   getInitialState() {
     return {

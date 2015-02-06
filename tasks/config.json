@@ -17,7 +17,7 @@
     "transform": {
       "literalify": {
         "jquery": "window.$",
-        "underscore": "window._",
+        "lodash": "window._",
         "react": "window.React"
       }
     }
