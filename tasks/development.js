@@ -72,7 +72,9 @@ bundler = function() {
               debug: true
             }, watchify.args)));
 
-    b.on('bundle', gutil.colors.cyan.bind(null, 'Bundle: ' + filename));
+    b.on('bundle', function() {
+      gutil.log(gutil.colors.green('Bundle'), filename);
+    });
     b.on('error', errorsHandler.browserifyErrorHandler);
     b.on('update', bundle);
     b.transform(to5ify);
@@ -97,6 +99,6 @@ bundle = function() {
   return stream;
 };
 
-gulp.task('development:watch', function () {
+gulp.task('development:watch', ['development:build'], function () {
   return bundle();
 });
