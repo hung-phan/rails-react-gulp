@@ -1,5 +1,5 @@
-var gutil    = require('gulp-util');
-var notifier = require('node-notifier');
+var gutil    = require('gulp-util'),
+    notifier = require('node-notifier');
 
 module.exports = {
   browserifyErrorHandler: function (err) {

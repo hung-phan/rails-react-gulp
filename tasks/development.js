@@ -54,3 +54,49 @@ gulp.task('development:build', ['development:clean'], function() {
   return stream;
 });
 
+
+// Experimental
+var bundle,
+    bundler,
+    cached = {};
+
+bundler = function() {
+  return transform(function(filename) {
+    // cached
+    if (cached[filename]) {
+      return cached[filename].bundle();
+    }
+
+    var b = watchify(browserify(filename, _.extend({
+              runtime: require.resolve('regenerator/runtime'),
+              debug: true
+            }, watchify.args)));
+
+    b.on('bundle', gutil.colors.cyan.bind(null, 'Bundle: ' + filename));
+    b.on('error', errorsHandler.browserifyErrorHandler);
+    b.on('update', bundle);
+    b.transform(to5ify);
+    b.transform(debowerify);
+    b.transform(literalify);
+
+    cached[filename] = b;
+
+    return b.bundle();
+  });
+};
+
+bundle = function() {
+  var stream = gulp.src([config.development.src])
+                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
+                 .pipe(bundler())
+                 .pipe(rename(function(path) {
+                   path.basename = path.basename.replace(config.rename.before, config.rename.after);
+                 }))
+                 .pipe(gulp.dest(config.development.build));
+
+  return stream;
+};
+
+gulp.task('development:watch', function () {
+  return bundle();
+});
