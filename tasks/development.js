@@ -37,24 +37,6 @@ gulp.task('development:clean', function () {
 });
 
 gulp.task('development:build', function() {
-  var browserified = through2.obj(function(file, enc, next) {
-    browserify(file.path, {runtime: require.resolve('regenerator/runtime')})
-      .on('error', errorsHandler.browserifyErrorHandler)
-      .transform(to5ify)
-      .transform(literalify)
-      .bundle(function(err, res){
-          file.contents = res;
-          next(null, file);
-      });
-  });
-
-  return gulp.src([config.development.src])
-           .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
-           .pipe(browserified)
-           .pipe(gulp.dest(config.development.build));
-});
-
-gulp.task('development:build', function() {
   var browserified = transform(function(filename) {
     return browserify(filename, {runtime: require.resolve('regenerator/runtime')})
              .on('error', errorsHandler.browserifyErrorHandler)
