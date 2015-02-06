@@ -4,21 +4,20 @@
  * Development config
  */
 
-var config        = require('./config.json');
-var del           = require('del');
-var gulp          = require('gulp');
-var gutil         = require('gulp-util');
-var plumber       = require('gulp-plumber');
-
-var to5ify        = require('6to5ify');
-var debowerify    = require('debowerify');
-var browserify    = require('browserify');
-
-var _             = require('lodash');
-var transform     = require('vinyl-transform');
-var watchify      = require('watchify');
-var literalify    = require('literalify').configure(config.browserify.transform.literalify);
-var errorsHandler = require('./errors-handler');
+var _             = require('lodash'),
+    config        = require('./config.json'),
+    del           = require('del'),
+    gulp          = require('gulp'),
+    gutil         = require('gulp-util'),
+    rename        = require('gulp-rename'),
+    plumber       = require('gulp-plumber'),
+    transform     = require('vinyl-transform'),
+    browserify    = require('browserify'),
+    watchify      = require('watchify'),
+    to5ify        = require('6to5ify'),
+    debowerify    = require('debowerify'),
+    literalify    = require('literalify').configure(config.browserify.transform.literalify),
+    errorsHandler = require('./errors-handler');
 
 // main task
 gulp.task('development:clean', function () {
@@ -30,28 +29,6 @@ gulp.task('development:clean', function () {
   });
 });
 
-gulp.task('development:watch', function() {
-  var browserified = transform(function(filename) {
-    var b = browserify(filename, {
-              runtime: require.resolve('regenerator/runtime'),
-              debug: true
-            });
-
-    b.on('error', errorsHandler.browserifyErrorHandler);
-    b.transform(to5ify);
-    b.transform(literalify);
-
-    return b.bundle();
-  });
-
-  var stream = gulp.src([config.development.src])
-                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
-                 .pipe(browserified)
-                 .pipe(gulp.dest(config.development.build));
-
-  return stream;
-});
-
 gulp.task('development:build', ['development:clean'], function() {
   var browserified = transform(function(filename) {
     var b = browserify(filename, {
@@ -60,6 +37,7 @@ gulp.task('development:build', ['development:clean'], function() {
 
     b.on('error', errorsHandler.browserifyErrorHandler);
     b.transform(to5ify);
+    b.transform(debowerify);
     b.transform(literalify);
 
     return b.bundle();
@@ -68,7 +46,11 @@ gulp.task('development:build', ['development:clean'], function() {
   var stream = gulp.src([config.development.src])
                  .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
                  .pipe(browserified)
+                 .pipe(rename(function(path) {
+                   path.basename = path.basename.replace(config.rename.before, config.rename.after);
+                 }))
                  .pipe(gulp.dest(config.development.build));
 
   return stream;
 });
+

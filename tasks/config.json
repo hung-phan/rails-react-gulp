@@ -8,6 +8,10 @@
     "src": "./app/assets/source/*-build.js",
     "build": "./app/assets/javascripts/build"
   },
+  "rename": {
+    "before": "build",
+    "after": "bundle"
+  },
   "browserify": {
     "transform": {
       "literalify": {
