@@ -9,8 +9,8 @@ var _             = require('lodash'),
     del           = require('del'),
     gulp          = require('gulp'),
     gutil         = require('gulp-util'),
-    rename        = require('gulp-rename'),
     plumber       = require('gulp-plumber'),
+    changed       = require('gulp-changed'),
     transform     = require('vinyl-transform'),
     browserify    = require('browserify'),
     watchify      = require('watchify'),
@@ -65,10 +65,8 @@ gulp.task('javascript:dev', ['javascript:clean'], function () {
   bundle = function() {
     var stream = gulp.src([config.development.src])
                    .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
+                   .pipe(changed(config.development.build))
                    .pipe(bundler())
-                   .pipe(rename(function(path) {
-                     path.basename = path.basename.replace(config.rename.before, config.rename.after);
-                   }))
                    .pipe(gulp.dest(config.development.build));
 
     return stream;
@@ -95,9 +93,6 @@ gulp.task('javascript:build', ['javascript:clean'], function() {
   var stream = gulp.src([config.production.src])
                  .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
                  .pipe(browserified)
-                 .pipe(rename(function(path) {
-                   path.basename = path.basename.replace(config.rename.before, config.rename.after);
-                 }))
                  .pipe(gulp.dest(config.production.build));
 
   return stream;
