@@ -2,6 +2,7 @@
   "app_name": "Rails with Gulp",
   "development": {
     "src": "./app/assets/source/*-bundle.js",
+    "watch": "./app/assets/source/**/*.js",
     "build": "./app/assets/javascripts/build"
   },
   "production": {

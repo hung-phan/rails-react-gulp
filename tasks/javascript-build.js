@@ -20,7 +20,7 @@ var _             = require('lodash'),
     errorsHandler = require('./errors-handler');
 
 // clean task
-gulp.task('clean', function () {
+gulp.task('javascript:clean', function () {
   del([config.development.build], function (err, paths) {
     gutil.log(
       'Deleted files/folders:\n',
@@ -30,7 +30,7 @@ gulp.task('clean', function () {
 });
 
 // watch task
-gulp.task('development', ['clean'], function () {
+gulp.task('javascript:dev', ['javascript:clean'], function () {
   var bundle,
       bundler,
       cached = {};
@@ -73,11 +73,12 @@ gulp.task('development', ['clean'], function () {
 
     return stream;
   };
+
   return bundle();
 });
 
 // build task
-gulp.task('build', ['clean'], function() {
+gulp.task('javascript:build', ['javascript:clean'], function() {
   var browserified = transform(function(filename) {
     var b = browserify(filename, {
               runtime: require.resolve('regenerator/runtime')

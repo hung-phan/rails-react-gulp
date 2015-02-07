@@ -1,29 +1,25 @@
 require('6to5/polyfill');
 
 let csp = require('js-csp');
+let $ = require('jquery');
+import * as math from './application/module-1';
 
-var ch = csp.chan();
+function listen(el, type) {
+  var ch = csp.chan();
+  el.addEventListener(type, function(e) {
+    csp.putAsync(ch, e);
+  });
+  return ch;
+}
 
-csp.go(function*() {
-  var v;
-  while((v = yield csp.take(ch)) !== csp.CLOSED) {
-    console.log(v);
-    yield csp.take(csp.timeout(300));
-    yield csp.put(ch, 2);
-  }
-});
-
-csp.go(function*() {
-  var v;
-  yield csp.put(ch, 1);
-  while((v = yield csp.take(ch)) !== csp.CLOSED) {
-    console.log(v);
-    yield csp.take(csp.timeout(200));
-    yield csp.put(ch, 3);
-  }
-});
-
-csp.go(function*() {
-  yield csp.take(csp.timeout(5000));
-  ch.close();
-});
+$(document).ready(() => {
+  csp.go(function*() {
+    var el = document.getElementById('ui');
+    var ch = listen(el, 'mousemove');
+    while(true) {
+      var e = yield csp.take(ch);
+      el.innerHTML = ((e.layerX || e.clientX) + ', ' +
+                      (e.layerY || e.clientY));
+    }
+  });
+})
