@@ -14,7 +14,8 @@
       "literalify": {
         "jquery": "window.$",
         "lodash": "window._",
-        "react": "window.React"
+        "react": "window.React",
+        "superagent": "window.superagent"
       }
     }
   }
