@@ -10,13 +10,13 @@ var _             = require('lodash'),
     gulp          = require('gulp'),
     gutil         = require('gulp-util'),
     plumber       = require('gulp-plumber'),
-    changed       = require('gulp-changed'),
     transform     = require('vinyl-transform'),
     browserify    = require('browserify'),
     watchify      = require('watchify'),
     to5ify        = require('6to5ify'),
     debowerify    = require('debowerify'),
     literalify    = require('literalify').configure(config.browserify.transform.literalify),
+    minimist      = require('minimist'),
     errorsHandler = require('./errors-handler');
 
 // clean task
@@ -33,7 +33,9 @@ gulp.task('javascript:clean', function () {
 gulp.task('javascript:dev', ['javascript:clean'], function () {
   var bundle,
       bundler,
-      cached = {};
+      cached = {},
+      argv = minimist(process.argv.slice(2)),
+      source = argv.only ? config.development.path + argv.only : config.development.src;
 
   bundler = function() {
     return transform(function(filename) {
@@ -63,9 +65,8 @@ gulp.task('javascript:dev', ['javascript:clean'], function () {
   };
 
   bundle = function() {
-    var stream = gulp.src([config.development.src])
+    var stream = gulp.src([source])
                    .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
-                   .pipe(changed(config.development.build))
                    .pipe(bundler())
                    .pipe(gulp.dest(config.development.build));
 
