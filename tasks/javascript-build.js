@@ -19,8 +19,8 @@ var _             = require('lodash'),
     literalify    = require('literalify').configure(config.browserify.transform.literalify),
     errorsHandler = require('./errors-handler');
 
-// main task
-gulp.task('development:clean', function () {
+// clean task
+gulp.task('clean', function () {
   del([config.development.build], function (err, paths) {
     gutil.log(
       'Deleted files/folders:\n',
@@ -29,33 +29,8 @@ gulp.task('development:clean', function () {
   });
 });
 
-gulp.task('development:build', ['development:clean'], function() {
-  var browserified = transform(function(filename) {
-    var b = browserify(filename, {
-              runtime: require.resolve('regenerator/runtime')
-            });
-
-    b.on('error', errorsHandler.browserifyErrorHandler);
-    b.transform(to5ify);
-    b.transform(literalify);
-    b.transform(debowerify);
-
-    return b.bundle();
-  });
-
-  var stream = gulp.src([config.development.src])
-                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
-                 .pipe(browserified)
-                 .pipe(rename(function(path) {
-                   path.basename = path.basename.replace(config.rename.before, config.rename.after);
-                 }))
-                 .pipe(gulp.dest(config.development.build));
-
-  return stream;
-});
-
-
-gulp.task('development:watch', ['development:build'], function () {
+// watch task
+gulp.task('development', ['clean'], function () {
   var bundle,
       bundler,
       cached = {};
@@ -99,4 +74,30 @@ gulp.task('development:watch', ['development:build'], function () {
     return stream;
   };
   return bundle();
+});
+
+// build task
+gulp.task('build', ['clean'], function() {
+  var browserified = transform(function(filename) {
+    var b = browserify(filename, {
+              runtime: require.resolve('regenerator/runtime')
+            });
+
+    b.on('error', errorsHandler.browserifyErrorHandler);
+    b.transform(to5ify);
+    b.transform(literalify);
+    b.transform(debowerify);
+
+    return b.bundle();
+  });
+
+  var stream = gulp.src([config.production.src])
+                 .pipe(plumber({ errorHandler: errorsHandler.browserifyErrorHandler }))
+                 .pipe(browserified)
+                 .pipe(rename(function(path) {
+                   path.basename = path.basename.replace(config.rename.before, config.rename.after);
+                 }))
+                 .pipe(gulp.dest(config.production.build));
+
+  return stream;
 });

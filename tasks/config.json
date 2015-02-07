@@ -1,16 +1,16 @@
 {
   "app_name": "Rails with Gulp",
   "development": {
-    "src": "./app/assets/source/*-build.js",
+    "src": "./app/assets/source/*-bundle.js",
     "build": "./app/assets/javascripts/build"
   },
   "production": {
-    "src": "./app/assets/source/*-build.js",
+    "src": "./app/assets/source/*-bundle.js",
     "build": "./app/assets/javascripts/build"
   },
   "rename": {
-    "before": "build",
-    "after": "bundle"
+    "before": "bundle",
+    "after": "build"
   },
   "browserify": {
     "transform": {
