@@ -37,8 +37,8 @@ gulp.task('development:build', ['development:clean'], function() {
 
     b.on('error', errorsHandler.browserifyErrorHandler);
     b.transform(to5ify);
-    b.transform(debowerify);
     b.transform(literalify);
+    b.transform(debowerify);
 
     return b.bundle();
   });
@@ -78,8 +78,8 @@ gulp.task('development:watch', ['development:build'], function () {
       b.on('error', errorsHandler.browserifyErrorHandler);
       b.on('update', bundle);
       b.transform(to5ify);
-      b.transform(debowerify);
       b.transform(literalify);
+      b.transform(debowerify);
 
       cached[filename] = b;
 
