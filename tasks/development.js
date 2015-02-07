@@ -72,8 +72,8 @@ gulp.task('development:watch', ['development:build'], function () {
                 debug: true
               }, watchify.args)));
 
-      b.on('bundle', function() {
-        gutil.log(gutil.colors.green('Bundle'), filename);
+      b.on('time', function(time) {
+        gutil.log(gutil.colors.green('Bundle'), filename + gutil.colors.magenta(' in ' + time + 'ms'));
       });
       b.on('error', errorsHandler.browserifyErrorHandler);
       b.on('update', bundle);
