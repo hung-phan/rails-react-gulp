@@ -2,7 +2,6 @@ require('6to5/polyfill');
 
 let csp = require('js-csp');
 let $ = require('jquery');
-import * as math from './application/module-1';
 
 function listen(el, type) {
   var ch = csp.chan();
