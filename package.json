@@ -1,10 +1,13 @@
 {
-  "name": "test",
+  "name": "rails-react-gulp",
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "6to5": "^3.3.12",
     "6to5ify": "^4.1.0",
     "browserify": "=8.0.1",
-    "debowerify": "^1.2.0",
+    "debowerify": "*",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-if": "^1.2.5",
@@ -17,11 +20,7 @@
     "regenerator": "^0.8.9",
     "require-dir": "^0.1.0",
     "vinyl-transform": "^1.0.0",
-    "watchify": "^2.3.0",
-    "jest-cli": "*",
-    "debowerify": "*"
-  },
-  "dependencies": {
+    "watchify": "^2.3.0"
   },
   "license": "MIT",
   "engines": {
