@@ -13,6 +13,7 @@
     "gulp-if": "^1.2.5",
     "gulp-plumber": "^0.6.6",
     "gulp-util": "^3.0.3",
+    "jest-cli": "^0.2.2",
     "literalify": "^0.3.0",
     "lodash": "^3.1.0",
     "minimist": "^1.1.0",
