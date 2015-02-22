@@ -1,10 +1,8 @@
 {
   "name": "rails-react-gulp",
-  "jest": {
-    "test": "jest"
-  },
   "devDependencies": {
     "babel": "*",
+    "babel-core": "^4.4.5",
     "babelify": "*",
     "browserify": "=8.0.1",
     "browserify-shim": "*",
@@ -13,6 +11,7 @@
     "gulp-if": "*",
     "gulp-plumber": "*",
     "gulp-util": "*",
+    "jest-cli": "^0.4.0",
     "lodash": "*",
     "minimist": "*",
     "node-notifier": "*",
@@ -20,6 +19,12 @@
     "require-dir": "*",
     "vinyl-transform": "*",
     "watchify": "*"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "./preprocessor.js"
   },
   "browser": {
     "js-csp": "./vendor/assets/bower_components/js-csp/src/csp.js"
