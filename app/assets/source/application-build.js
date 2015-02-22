@@ -1,4 +1,4 @@
-require('6to5/polyfill');
+require('babel/polyfill');
 
 let csp = require('js-csp');
 let $ = require('jquery');
