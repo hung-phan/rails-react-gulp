@@ -9,19 +9,19 @@ var config        = require('./tasks/config.json'),
     notifier      = require('node-notifier');
 
 module.exports = {
-  process: function(src) {
-    console.log(src);
-    //return browserify({
-      //runtime: require.resolve('regenerator/runtime')
-    //})
-    //.on('error', function(err) {
-      //notifier.notify({ message: 'Error: ' + err.message });
-      //this.emit('end');
-    //})
-    //.transform(to5ify)
-    //.transform(literalify)
-    //.transform(debowerify)
-    //.bundle();
+  process: function(src, filename) {
+    var browserified = browserify(filename, {
+      runtime: require.resolve('regenerator/runtime')
+    })
+    .on('error', function(err) {
+      notifier.notify({ message: 'Error: ' + err.message });
+      this.emit('end');
+    })
+    .transform(to5ify)
+    .transform(literalify)
+    .transform(debowerify)
+    .bundle();
+
     return src;
   }
 };
