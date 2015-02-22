@@ -8,15 +8,5 @@
   "production": {
     "src": "./app/assets/sources/*-build.js",
     "build": "./app/assets/javascripts/build"
-  },
-  "browserify": {
-    "transform": {
-      "literalify": {
-        "jquery": "window.$",
-        "lodash": "window._",
-        "react": "window.React",
-        "superagent": "window.superagent"
-      }
-    }
   }
 }

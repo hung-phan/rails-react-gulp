@@ -16,7 +16,6 @@ var _             = require('lodash'),
     babelify      = require('babelify'),
     debowerify    = require('debowerify'),
     shimify       = require('browserify-shim'),
-    literalify    = require('literalify').configure(config.browserify.transform.literalify),
     minimist      = require('minimist'),
     errorsHandler = require('./errors-handler');
 
