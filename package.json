@@ -24,6 +24,9 @@
     "vinyl-transform": "*",
     "watchify": "*"
   },
+  "browser": {
+    "js-csp": "./vendor/assets/bower_components/js-csp/src/csp.js"
+  },
   "browserify-shim": {
     "jquery": "global:$"
   },

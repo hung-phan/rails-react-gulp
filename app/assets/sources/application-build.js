@@ -2,6 +2,7 @@ require('babel/polyfill');
 
 let csp = require('js-csp');
 let $ = require('jquery');
+let _ = require('lodash');
 
 function listen(el, type) {
   var ch = csp.chan();
