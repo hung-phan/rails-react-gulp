@@ -7,6 +7,7 @@
     "babel": "*",
     "babelify": "*",
     "browserify": "=8.0.1",
+    "browserify-shim": "*",
     "debowerify": "*",
     "del": "*",
     "gulp": "*",
@@ -22,6 +23,9 @@
     "require-dir": "*",
     "vinyl-transform": "*",
     "watchify": "*"
+  },
+  "browserify-shim": {
+    "jquery": "global:$"
   },
   "license": "MIT",
   "engines": {

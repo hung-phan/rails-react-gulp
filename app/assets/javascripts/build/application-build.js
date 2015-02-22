@@ -1,10 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
 "use strict";
 
 require("babel/polyfill");
 
 var csp = require("./../../../vendor/assets/bower_components/js-csp/src/csp.js");
-var $ = window.$;
+var $ = (typeof window !== "undefined" ? window.$ : typeof global !== "undefined" ? global.$ : null);
 
 function listen(el, type) {
   var ch = csp.chan();
@@ -49,6 +50,7 @@ $(document).ready(function () {
   }));
 });
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./../../../vendor/assets/bower_components/js-csp/src/csp.js":7,"babel/polyfill":5}],2:[function(require,module,exports){
 (function (global){
 "use strict";
