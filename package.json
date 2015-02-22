@@ -6,7 +6,7 @@
   "devDependencies": {
     "babel": "*",
     "babelify": "*",
-    "browserify": "*",
+    "browserify": "=8.0.1",
     "browserify-shim": "*",
     "del": "*",
     "gulp": "*",
@@ -25,7 +25,8 @@
     "js-csp": "./vendor/assets/bower_components/js-csp/src/csp.js"
   },
   "browserify-shim": {
-    "jquery": "global:$"
+    "jquery": "global:jQuery",
+    "superagent": "global:superagent"
   },
   "license": "MIT",
   "engines": {

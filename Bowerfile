@@ -3,6 +3,7 @@
 
 # asset 'bootstrap'
 
+asset 'jquery'
 asset 'lodash'
 asset 'react-router'
 asset 'superagent'
