@@ -16,7 +16,6 @@ var _             = require('lodash'),
     babelify      = require('babelify'),
     shimify       = require('browserify-shim'),
     minimist      = require('minimist'),
-    shell         = require('shelljs'),
     errorsHandler = require('./errors-handler');
 
 // clean task
@@ -99,7 +98,3 @@ gulp.task('javascript:build', ['javascript:clean'], function() {
 
   return stream;
 });
-
-// test task
-gulp.task('javascript:test', function() { shell.exec('npm test'); });
-gulp.task('watch', function() { gulp.watch([config.development.src, config.development.test], ['javascript:test']); });
