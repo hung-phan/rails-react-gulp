@@ -14,8 +14,7 @@ var _             = require('lodash'),
     browserify    = require('browserify'),
     watchify      = require('watchify'),
     babelify      = require('babelify'),
-    envify        = require('envify'),
-    deamdify      = require('deamdify'),
+    envify        = require('envify/custom'),
     shimify       = require('browserify-shim'),
     minimist      = require('minimist'),
     errorsHandler = require('./errors-handler');
@@ -56,11 +55,10 @@ gulp.task('javascript:dev', function () {
       b.on('error', errorsHandler.browserifyErrorHandler);
       b.on('update', bundle);
       b.transform(babelify);
-      b.transform(deamdify);
+      b.transform(shimify);
       b.transform(envify({
         NODE_ENV: 'development'
       }));
-      b.transform(shimify);
 
       cached[filename] = b;
 
@@ -92,11 +90,10 @@ gulp.task('javascript:build', ['javascript:clean'], function() {
       gutil.log(gutil.colors.green('Bundle'), filename + gutil.colors.magenta(' in ' + time + 'ms'));
     });
     b.transform(babelify);
-    b.transform(deamdify);
-    b.transform(envify({
-      NODE_ENV: 'development'
-    }));
     b.transform(shimify);
+    b.transform(envify({
+      NODE_ENV: 'production'
+    }));
 
     return b.bundle();
   });
