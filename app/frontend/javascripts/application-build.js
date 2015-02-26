@@ -25,4 +25,4 @@ $(document).ready(() => {
                       (e.layerY || e.clientY));
     }
   });
-})
+});

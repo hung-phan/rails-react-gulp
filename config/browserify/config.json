@@ -1,0 +1,9 @@
+{
+  "app_name": "Rails with Gulp",
+  "browserify": {
+    "path": "./app/frontend/javascripts/",
+    "src": "./app/frontend/javascripts/*-build.js",
+    "test": "./__tests__/**/*-test.js",
+    "build": "./app/assets/javascripts/build"
+  }
+}
