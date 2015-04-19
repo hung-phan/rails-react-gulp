@@ -1,14 +1,15 @@
 {
   "name": "rails-react-gulp",
   "devDependencies": {
-    "watchify": "*",
+    "chai": "^2.2.0",
     "del": "*",
     "minimist": "*",
     "mocha": "^2.2.4",
     "node-notifier": "*",
     "regenerator": "*",
     "require-dir": "*",
-    "vinyl-transform": "*"
+    "vinyl-transform": "*",
+    "watchify": "*"
   },
   "dependencies": {
     "babel": "*",
@@ -26,6 +27,9 @@
     "react-router": "*",
     "superagent": "*"
   },
+  "scripts": {
+    "test": "mocha --compilers js:compiler.js app/frontend/javascripts/**/*-test.js"
+  }
   "browser": {},
   "browserify-shim": {
     "jquery": "global:$"
@@ -34,4 +38,4 @@
   "engines": {
     "node": ">= 0.10"
   }
-}
+  }
