@@ -3,36 +3,30 @@
   "devDependencies": {
     "watchify": "*",
     "del": "*",
-    "jest-cli": "*",
     "minimist": "*",
+    "mocha": "^2.2.4",
     "node-notifier": "*",
     "regenerator": "*",
     "require-dir": "*",
     "vinyl-transform": "*"
   },
   "dependencies": {
+    "babel": "*",
+    "babel-core": "*",
+    "babelify": "*",
+    "browserify": "=8.0.1",
+    "browserify-shim": "*",
+    "envify": "*",
     "gulp": "*",
     "gulp-if": "*",
     "gulp-plumber": "*",
     "gulp-util": "*",
-    "babel": "*",
-    "babel-core": "*",
-    "babelify": "*",
-    "envify": "*",
-    "browserify": "=8.0.1",
-    "browserify-shim": "*",
     "lodash": "*",
-    "superagent": "*",
     "react": "*",
-    "react-router": "*"
+    "react-router": "*",
+    "superagent": "*"
   },
-  "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "scriptPreprocessor": "./preprocessor.js"
-  },
-  "browser": { },
+  "browser": {},
   "browserify-shim": {
     "jquery": "global:$"
   },
