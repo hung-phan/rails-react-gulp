@@ -29,7 +29,7 @@
   },
   "scripts": {
     "test": "mocha --compilers js:compiler.js app/frontend/javascripts/**/*-test.js"
-  }
+  },
   "browser": {},
   "browserify-shim": {
     "jquery": "global:$"
