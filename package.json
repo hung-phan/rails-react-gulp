@@ -3,6 +3,7 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "del": "*",
+    "jsdom": "^5.0.1",
     "minimist": "*",
     "mocha": "^2.2.4",
     "node-notifier": "*",
@@ -28,7 +29,7 @@
     "superagent": "*"
   },
   "scripts": {
-    "test": "mocha --compilers js:compiler.js app/frontend/javascripts/**/*-test.js"
+    "test": "mocha --watch --compilers js:compiler.js app/frontend/javascripts/**/*-test.js"
   },
   "browser": {},
   "browserify-shim": {
@@ -36,6 +37,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">= 0.10"
+    "node": ">= 0.10",
+    "iojs": ">= 1.5.0"
   }
-  }
+}
