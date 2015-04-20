@@ -29,7 +29,7 @@
     "superagent": "*"
   },
   "scripts": {
-    "test": "mocha --watch --compilers js:compiler.js app/frontend/javascripts/**/*-test.js"
+    "test": "mocha --watch --reporter nyan --compilers js:compiler.js app/frontend/javascripts/**/*-test.js"
   },
   "browser": {},
   "browserify-shim": {
